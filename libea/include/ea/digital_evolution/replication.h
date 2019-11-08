@@ -55,10 +55,10 @@ namespace ealib {
         template <typename EA>
         std::pair<typename EA::location_iterator, bool> operator()(typename EA::individual_ptr_type parent, EA& ea) {
             typename EA::location_iterator l = ea.env().neighbor(parent);
-            if (l->occupied()) {
-                return std::make_pair(l, false);
-
-            }
+//            if (l->occupied()) {
+//                return std::make_pair(l, false);
+//
+//            }
             return std::make_pair(l, true);
         }
     };
