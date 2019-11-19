@@ -51,10 +51,14 @@ namespace ealib {
     /*! Selects the location of the neighbor faced by the parent as the location
      for an offspring.
      */
+// FIXME Kate  - remove hacky log printing 
     struct faced_neighbor {
         template <typename EA>
         std::pair<typename EA::location_iterator, bool> operator()(typename EA::individual_ptr_type parent, EA& ea) {
+            static std::ofstream overwrite_file("overwrite.dat");
             typename EA::location_iterator l = ea.env().neighbor(parent);
+            if (l->occupied()) overwrite_file << "1";
+            else overwrite_file << "0";
             return std::make_pair(l, true);
         }
     };
@@ -65,11 +69,14 @@ namespace ealib {
     struct empty_facing_neighbor {
         template <typename EA>
         std::pair<typename EA::location_iterator, bool> operator()(typename EA::individual_ptr_type parent, EA& ea) {
+            static std::ofstream overwrite_file("overwrite.dat");
             typename EA::location_iterator l = ea.env().neighbor(parent);
             if (l->occupied()) {
+                overwrite_file << "1";
                 return std::make_pair(l, false);
 
             }
+            overwrite_file << "0";
             return std::make_pair(l, true);
         }
     };
